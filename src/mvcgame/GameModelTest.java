@@ -92,4 +92,38 @@ public class GameModelTest {
                 "Each participant should get at least the stag reward after cooperation.");
     }
 
+    @Test
+    void stagCannotBeHuntedSolo() {
+        GameModel model = new GameModel();
+
+        // Place a single stag in the world
+        Stag stag = new Stag(150, 150);
+        model.getAnimals().clear();
+        model.getAnimals().add(stag);
+
+        // Move only the player onto the stag position
+        var playerStart = model.getPlayerBounds();
+        model.movePlayer(stag.getBounds().x - playerStart.x, stag.getBounds().y - playerStart.y);
+
+        // Keep NPC away (no cooperation)
+        model.moveNpcTo(0, 0);
+
+        int beforeScore = model.getPlayerScore();
+        int beforeNpcScore = model.getNpcScore();
+
+        // Simulate multiple ticks — enough time for any solo tag to expire
+        for (int i = 0; i < 5; i++) {
+            model.tick();
+            try { Thread.sleep(400); } catch (InterruptedException ignored) {} // simulate time passing
+        }
+
+        int afterScore = model.getPlayerScore();
+        int afterNpcScore = model.getNpcScore();
+
+        // === Assertions ===
+        assertEquals(beforeScore, afterScore, "Player should NOT get points when hunting a stag alone.");
+        assertEquals(beforeNpcScore, afterNpcScore, "NPC should NOT get points without cooperation.");
+        assertTrue(model.getAnimals().stream().anyMatch(a -> a instanceof Stag),
+                "Stag should remain alive if only one participant tagged it.");
+    }
 }
