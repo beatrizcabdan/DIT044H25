@@ -19,6 +19,6 @@ public class Hare extends Game {
 
     @Override
     public int getReward() {
-        return 2; // 🪙 Hare reward
+        return 2; // Hare reward
     }
 }

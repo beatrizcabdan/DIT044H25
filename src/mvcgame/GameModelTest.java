@@ -21,13 +21,75 @@ public class GameModelTest {
     }
 
     @Test
-    void collectingCoinIncrementsScore() {
-        GameModel m = new GameModel();
-        var target = m.getAnimals().get(0).getBounds(); // use first animal
-        var p = m.getPlayerBounds();
-        m.movePlayer(target.x - p.x, target.y - p.y);
-//        int before = m.getScore();
-//        m.tick();
-//        assertEquals(before + 1, m.getScore());
+    void huntingStagGivesMorePointsThanHare() {
+        GameModel model = new GameModel();
+
+        // Prepare one hare and one stag
+        Hare hare = new Hare(100, 100);
+        Stag stag = new Stag(200, 200);
+        model.getAnimals().clear();
+        model.getAnimals().add(hare);
+        model.getAnimals().add(stag);
+
+        // === Player catches hare ===
+        var p = model.getPlayerBounds();
+        model.movePlayer(hare.getBounds().x - p.x, hare.getBounds().y - p.y);
+        model.tick(); // player catches hare
+
+        int afterHareScore = model.getPlayerScore();
+
+        // === Co-op stag hunt ===
+        model.getAnimals().clear();
+        stag = new Stag(200, 200);
+        model.getAnimals().add(stag);
+
+        // Move both player and NPC on the stag position
+        model.movePlayer(stag.getBounds().x - model.getPlayerBounds().x,
+                stag.getBounds().y - model.getPlayerBounds().y);
+
+        // Force NPC directly over the stag as well
+        model.moveNpcTo(stag.getBounds().x, stag.getBounds().y);
+
+        // --- First tick: one of them tags ---
+        model.tick();
+        // --- Second tick (within coop window): simulate both tagging again ---
+        model.tick();
+
+        int afterStagScore = model.getPlayerScore();
+
+        // === Assertions ===
+        assertTrue(afterStagScore > afterHareScore,
+                "Catching a stag should give more points than catching a hare.");
+
+        assertEquals(2, hare.getReward());
+        assertEquals(10, stag.getReward());
+        assertTrue(stag.getReward() > hare.getReward(),
+                "Stag reward should be higher than hare reward.");
     }
+
+    @Test
+    void coopHuntGivesPointsToBothPlayerAndNpc() {
+        GameModel model = new GameModel();
+
+        // Single stag
+        Stag stag = new Stag(200, 200);
+        model.getAnimals().clear();
+        model.getAnimals().add(stag);
+
+        // Move both onto stag
+        model.movePlayer(stag.getBounds().x - model.getPlayerBounds().x,
+                stag.getBounds().y - model.getPlayerBounds().y);
+        model.moveNpcTo(stag.getBounds().x, stag.getBounds().y);
+
+        // Run multiple ticks to allow cooperation window
+        model.tick();
+        model.tick();
+        model.tick();
+
+        assertEquals(model.getPlayerScore(), model.getNpcScore(),
+                "Both player and NPC should get equal points for a co-op stag hunt.");
+        assertTrue(model.getPlayerScore() >= stag.getReward(),
+                "Each participant should get at least the stag reward after cooperation.");
+    }
+
 }

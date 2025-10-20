@@ -18,8 +18,6 @@ public class Player {
     public int getSpeed()        { return speed; }
     public void setSpeed(int s)  { this.speed = Math.max(1, s); }
     public boolean isStealth()   { return stealth; }
-    public double centerX()      { return bounds.getCenterX(); }
-    public double centerY()      { return bounds.getCenterY(); }
 
     public long getRemainingStealthMs() {
         if (!stealth) return 0;

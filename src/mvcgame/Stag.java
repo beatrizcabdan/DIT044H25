@@ -19,6 +19,6 @@ public class Stag extends Game {
 
     @Override
     public int getReward() {
-        return 10; // 🏆 Stag reward
+        return 10; // Stag reward
     }
 }

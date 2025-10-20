@@ -8,7 +8,7 @@ public class Hunter {
     private final Rectangle bounds;
     private final Random rnd = new Random();
 
-    private int speed = 2;
+    private final int speed = 2;
     private double dx = 0, dy = 0;
     private Class<? extends Game> targetType = null;
     private Game currentTarget = null;

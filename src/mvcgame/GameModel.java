@@ -129,4 +129,20 @@ public class GameModel {
 
         animals.addAll(spawns);
     }
+
+    /** For testing or debugging: directly set the NPC's position. */
+    public void moveNpcTo(int x, int y) {
+        // Access the internal hunter's bounds directly
+        Rectangle npcRect = npcHunter.getBounds();
+        // Update internal rectangle position
+        // Because getBounds() returns a copy, we need to do it on the real field
+        try {
+            var field = Hunter.class.getDeclaredField("bounds");
+            field.setAccessible(true);
+            Rectangle realBounds = (Rectangle) field.get(npcHunter);
+            realBounds.setLocation(x, y);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to move NPC for testing", e);
+        }
+    }
 }
