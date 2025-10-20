@@ -1,4 +1,6 @@
-package mvcgame;
+package StagHunt;
+
+// ALL INFO ABOUT THIS GAME: https://en.wikipedia.org/wiki/Stag_hunt
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -130,7 +132,7 @@ public class GameModel {
         animals.addAll(spawns);
     }
 
-    /** For testing or debugging: directly set the NPC's position. */
+    // For testing or debugging: directly set the NPC's position.
     public void moveNpcTo(int x, int y) {
         // Access the internal hunter's bounds directly
         Rectangle npcRect = npcHunter.getBounds();

@@ -1,4 +1,4 @@
-package mvcgame;
+package StagHunt;
 
 import javax.swing.*;
 

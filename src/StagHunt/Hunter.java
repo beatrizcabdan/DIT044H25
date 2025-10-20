@@ -1,4 +1,6 @@
-package mvcgame;
+package StagHunt;
+
+// ALL INFO ABOUT THIS GAME: https://en.wikipedia.org/wiki/Stag_hunt
 
 import java.awt.*;
 import java.util.List;
