@@ -23,3 +23,4 @@ public class Example1 {
         myPig.animalSound();
     }
 }
+

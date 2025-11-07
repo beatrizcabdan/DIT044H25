@@ -1,4 +1,4 @@
-package W46PackageVisibility.VisibilityP1;
+package W46PackageVisibility.ProtectedP1;
 
 public class Class1 {
     protected int num = 0; // protected member
