@@ -21,7 +21,7 @@ class Human extends Mammal {
     }
 }
 
-public class Overloading1 {
+public class Overriding1 {
     public static void main(String[] args) {
         Mammal mammal = new Mammal();
         Cat cat = new Cat();

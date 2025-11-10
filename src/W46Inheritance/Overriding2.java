@@ -19,7 +19,7 @@ class Iguana extends Reptile {
     }
 }
 
-public class Overloading2 {
+public class Overriding2 {
     public static void main(String[] args) {
         Iguana iguana = new Iguana();
 
