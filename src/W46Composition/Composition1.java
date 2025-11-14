@@ -11,21 +11,22 @@ class Person {
     }
 }
 
+class Teacher extends Person {
+    public Teacher(String name, int age) {
+        super(name, age);
+    }
+}
+
 class Student extends Person {
     float averageGrade;
 
     public Student(String name, int age) {
         super(name, age);
+        this.averageGrade = 0.0f;
     }
 
     public void setAverageGrade(float averageGrade) {
         this.averageGrade = averageGrade;
-    }
-}
-
-class Teacher extends Person {
-    public Teacher(String name, int age) {
-        super(name, age);
     }
 }
 
@@ -61,7 +62,7 @@ public class Composition1 {
         Student s4 = new Student("Paul", 22);
 
         // put them in list
-        List<Student> cse_students = new ArrayList<Student>();
+        ArrayList<Student> cse_students = new ArrayList<Student>();
         cse_students.add(s1);
         cse_students.add(s2);
         cse_students.add(s3);
